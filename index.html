@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Tinta de Corazones</title>
+  <!-- Fuentes estilo tattoo -->
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --ink:#f00a0a;
+      --paper:#faf7f3;
+      --accent:#cc2a49;
+      --accent-2:#067458;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+ body {
+  margin: 0;
+  font-family: 'Montserrat', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color: var(--ink);
+  background:
+    url('C:/Users/Revi/Downloads/ornamental.png') no-repeat center center fixed,
+    radial-gradient(1200px 600px at 50% -20%, rgba(235, 6, 6, 0.06), transparent 60%),
+    radial-gradient(1000px 500px at 50% 120%, rgba(228, 5, 5, 0.05), transparent 60%),
+    linear-gradient(180deg, #fff, var(--paper));
+  background-attachment: fixed, fixed, fixed, fixed;
+}
+
+    /* Patrón sutil  tatuaje  */
+    body:before{
+      content:"";
+      position:fixed; inset:0; pointer-events:none; opacity:.06;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cg fill='none' stroke='%23000' stroke-width='1.2' opacity='.8'%3E%3Cpath d='M30 40c10 6 20 6 30 0-7 10-12 20-10 32-9-7-15-17-20-32z'/%3E%3Cpath d='M130 120c-10-6-20-6-30 0 7-10 12-20 10-32 9 7 15 17 20 32z'/%3E%3C/g%3E%3C/svg%3E");
+      background-size:160px 160px;
+    }
+
+    .wrap{
+      max-width: 720px; 
+      margin: 0 auto;
+      padding: env(safe-area-inset-top) 12px calc(16px + env(safe-area-inset-bottom));
+      display:flex; flex-direction:column; gap:18px;
+      min-height:100dvh;
+    }
+
+    .header{
+      text-align:center; padding:14px 10px 0;
+    }
+    .brand{
+      font-family:'Great Vibes', cursive; font-size: 42px; line-height:5;
+      letter-spacing:.8px; margin:18px 0 16px; position:relative;
+      display:inline-block;
+    }
+    .brand:after{
+      /* animación "tinta" que se mueve*/
+      content:""; position:absolute; left:0; right:0; bottom:-6px; height:20px;
+      background: conic-gradient(from 180deg at 50% 50%, var(--accent), var(--accent-2), var(--accent));
+      clip-path: polygon(0 60%, 8% 40%, 16% 55%, 24% 35%, 32% 58%, 40% 42%, 48% 60%, 56% 40%, 64% 55%, 72% 35%, 80% 58%, 88% 42%, 96% 60%, 100% 50%, 100% 100%, 0 100%);
+      transform: scaleX(0);
+      transform-origin:left;
+      animation: draw-ink 2.4s ease .3s forwards;
+      border-radius:6px;
+      opacity:.8;
+    }
+    @keyframes draw-ink{to{transform:scaleX(1)}}
+
+    .subtitle{font-size:27px; opacity:.7}
+
+    .heart{
+      align-self:center; width:54px; height:54px; position:relative; margin:4px 0 0;
+      filter: drop-shadow(0 2px 4px rgba(247, 245, 245, 0.15));
+      animation: pulse 1.8s infinite ease-in-out;
+    }
+    @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+
+    /* (cuadro)  */
+    .panel{
+      position:relative; background: rgba(248, 247, 247, 0.85);
+      border: 2px solid #111; padding: 14px 12px 12px; border-radius: 18px;
+      box-shadow: 0 12px 30px rgba(0,0,0,.08), inset 0 0 0 6px #fff;
+      backdrop-filter: blur(2px);
+    }
+    .panel:before, .panel:after{
+      content:""; position:absolute; left:14px; right:14px; height:16px;
+      background-repeat:no-repeat; background-position:center;
+      opacity:.25; pointer-events:none;
+    }
+    .panel:before{top:-10px; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='16' viewBox='0 0 300 16'%3E%3Cpath d='M5 8 Q30 2 55 8 T105 8 T155 8 T205 8 T255 8 T295 8' fill='none' stroke='%23000' stroke-width='2'/%3E%3C/svg%3E");}
+    .panel:after{bottom:-10px; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='16' viewBox='0 0 300 16'%3E%3Cpath d='M5 8 Q30 14 55 8 T105 8 T155 8 T205 8 T255 8 T295 8' fill='none' stroke='%23000' stroke-width='2'/%3E%3C/svg%3E");}
+
+    .panel h2{
+      margin: 4px 2px 8px; padding:0; font-weight:600; font-size:18px; letter-spacing:.3px;
+      display:flex; align-items:center; gap:6px;
+    }
+    .panel h2 .editable-title{
+      font-family:'Great Vibes', cursive; font-size:26px; font-weight:400;
+      outline:none; border:none; background:transparent; padding:4px 8px; border-radius:10px;
+    }
+    .panel h2 .editable-title[contenteditable="true"]:focus{ box-shadow:0 0 0 2px rgba(31,138,112,.25); background:#f6fffb }
+
+    textarea{
+      width:100%; min-height:140px; resize:vertical; border-radius:14px;
+      border:1.5px solid rgba(0,0,0,.25); padding:12px 12px 42px; font-size:15px; line-height:1.45;
+      background: rgba(255,255,255,.9);
+      outline:none; transition: box-shadow .2s, border-color .2s;
+    }
+    textarea:focus{border-color: var(--accent-2); box-shadow: 0 0 0 4px rgba(31,138,112,.15)}
+
+    .controls{ display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:-36px; padding:0 8px }
+    .left-controls{ display:flex; align-items:center; gap:8px }
+    .btn{
+      appearance:none; border:none; border-radius:999px; padding:10px 16px; font-weight:600; font-size:14px;
+      background:#111; color:#fff; cursor:pointer; position:relative; overflow:hidden;
+    }
+    .btn.secondary{ background:#fff; color:#111; border:1px solid rgba(0,0,0,.2) }
+    .btn:active{ transform: translateY(1px) }
+
+    /* salpicadura de tinta */
+    .btn .splash{ position:absolute; width:260px; height:260px; border-radius:50%; left:var(--x,50%); top:var(--y,50%); transform:translate(-50%,-50%) scale(0); background:radial-gradient(circle, rgba(240, 6, 6, 0.15), rgba(255,255,255,0) 60%), conic-gradient(from 0deg, var(--accent), var(--accent-2), var(--accent)); opacity:.7; pointer-events:none }
+    .btn.animating .splash{ animation: splash .6s ease-out forwards }
+    @keyframes splash{ to{ transform:translate(-50%,-50%) scale(1.1); opacity:0 } }
+
+    .status{ font-size:12px; opacity:.6 }
+    .status.ok{ color: var(--accent-2); opacity:.9 }
+
+    .footer{ text-align:center; font-size:12px; opacity:.6; padding:6px 0 16px }
+
+    @media (min-width: 540px){ textarea{ min-height:160px } }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="header">
+      <div class="brand" aria-label="Tinta de Corazones"><strong>Tinta de Corazones</strong></div>
+      <div class="subtitle"><strong>Dos cuadros. Dos voces. Una conexión y un mismo latido.</strong></div>
+      <svg class="heart" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 21s-6.716-4.224-9.2-8.133C.62 9.252 2.824 5.5 6.4 5.5c2.056 0 3.352 1.067 3.996 2.138C11.04 6.567 12.336 5.5 14.392 5.5c3.576 0 5.78 3.752 3.6 7.367C18.716 16.776 12 21 12 21z" fill="currentColor"/>
+      </svg>
+    </header>
+
+    <!-- PANEL ARRIBA -->
+    <section class="panel" id="panel-arriba">
+      <h2>
+        <span class="status" id="status-arriba" aria-live="polite"></span>
+        <span class="editable-title" id="titulo-arriba" contenteditable="true" role="textbox" aria-label="Título de arriba">Tus palabras mi niña 💋</span>
+      </h2>
+      <textarea id="texto-arriba" placeholder="Escribe aquí…"></textarea>
+      <div class="controls">
+        <div class="left-controls">
+          <button class="btn" id="guardar-arriba">
+            Guardar
+            <span class="splash"></span>
+          </button>
+          <button class="btn secondary" id="borrar-arriba" title="Vaciar este cuadro">Vaciar</button>
+        </div>
+        <div class="status" id="guardado-arriba" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- PANEL ABAJO -->
+    <section class="panel" id="panel-abajo">
+      <h2>
+        <span class="status" id="status-abajo" aria-live="polite"></span>
+        <span class="editable-title" id="titulo-abajo" contenteditable="true" role="textbox" aria-label="Título de abajo">Mis palabras para mi niña ❤️</span>
+      </h2>
+      <textarea id="texto-abajo" placeholder="Escribe aquí…"></textarea>
+      <div class="controls">
+        <div class="left-controls">
+          <button class="btn" id="guardar-abajo">
+            Guardar
+            <span class="splash"></span>
+          </button>
+          <button class="btn secondary" id="borrar-abajo" title="Vaciar este cuadro">Vaciar</button>
+        </div>
+        <div class="status" id="guardado-abajo" aria-live="polite"></div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Inicialización de Firebase (módulo) -->
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-analytics.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyBCO7L2-ZRcP4ss_Q2x-N16CgMvSkHiszE",
+      authDomain: "tinta-de-corazones.firebaseapp.com",
+      projectId: "tinta-de-corazones",
+      storageBucket: "tinta-de-corazones.firebasestorage.app",
+      messagingSenderId: "710865792969",
+      appId: "1:710865792969:web:490b0a5a84d19aa6ed8218",
+      measurementId: "G-1BP47R7DYW"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+  </script>
+
+  <!-- Tu script original -->
+  <script>
+    (function(){
+      const KEYS = {
+        tituloArriba: 'tinta.titulo.arriba',
+        textoArriba:  'tinta.texto.arriba',
+        tituloAbajo:  'tinta.titulo.abajo',
+        textoAbajo:   'tinta.texto.abajo'
+      };
+
+      const $ = (sel) => document.querySelector(sel);
+
+      const tituloArriba = $('#titulo-arriba');
+      const tituloAbajo  = $('#titulo-abajo');
+      const textoArriba  = $('#texto-arriba');
+      const textoAbajo   = $('#texto-abajo');
+
+      const guardadoArriba = $('#guardado-arriba');
+      const guardadoAbajo  = $('#guardado-abajo');
+
+      try{
+        const tTop = localStorage.getItem(KEYS.tituloArriba);
+        const bTop = localStorage.getItem(KEYS.textoArriba);
+        const tBot = localStorage.getItem(KEYS.tituloAbajo);
+        const bBot = localStorage.getItem(KEYS.textoAbajo);
+        if(tTop) tituloArriba.textContent = tTop;
+        if(bTop) textoArriba.value = bTop;
+        if(tBot) tituloAbajo.textContent  = tBot;
+        if(bBot) textoAbajo.value  = bBot;
+      }catch(e){ console.warn('localStorage no disponible', e); }
+
+      let saveTimer;
+      function showSaved(el){
+        clearTimeout(saveTimer);
+        el.textContent = 'Guardado ✓';
+        el.classList.add('ok');
+        saveTimer = setTimeout(()=>{ el.textContent=''; el.classList.remove('ok'); }, 1800);
+      }
+
+      function splash(btn, evt){
+        const rect = btn.getBoundingClientRect();
+        const x = ((evt.clientX || (rect.left + rect.width/2)) - rect.left) + 'px';
+        const y = ((evt.clientY || (rect.top + rect.height/2)) - rect.top) + 'px';
+        btn.style.setProperty('--x', x);
+        btn.style.setProperty('--y', y);
+        btn.classList.remove('animating');
+        void btn.offsetWidth;
+        btn.classList.add('animating');
+      }
+
+      $('#guardar-arriba').addEventListener('click', (e)=>{
+        splash(e.currentTarget, e);
+        try{
+          localStorage.setItem(KEYS.tituloArriba, tituloArriba.textContent.trim());
+          localStorage.setItem(KEYS.textoArriba, textoArriba.value);
+          showSaved(guardadoArriba);
+        }catch(err){ alert('No se pudo guardar. Revisa permisos del navegador.'); }
+      });
+      $('#guardar-abajo').addEventListener('click', (e)=>{
+        splash(e.currentTarget, e);
+        try{
+          localStorage.setItem(KEYS.tituloAbajo, tituloAbajo.textContent.trim());
+          localStorage.setItem(KEYS.textoAbajo, textoAbajo.value);
+          showSaved(guardadoAbajo);
+        }catch(err){ alert('No se pudo guardar. Revisa permisos del navegador.'); }
+      });
+
+      $('#borrar-arriba').addEventListener('click', ()=>{
+        if(confirm('¿Vaciar el cuadro de arriba?')){
+          textoArriba.value='';
+          try{ localStorage.removeItem(KEYS.textoArriba); }catch{}
+        }
+      });
+      $('#borrar-abajo').addEventListener('click', ()=>{
+        if(confirm('¿Vaciar el cuadro de abajo?')){
+          textoAbajo.value='';
+          try{ localStorage.removeItem(KEYS.textoAbajo); }catch{}
+        }
+      });
+
+      function debounce(fn, ms){ let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a), ms); }; }
+
+      const autoSaveTop = debounce(()=>{
+        try{
+          localStorage.setItem(KEYS.textoArriba, textoArriba.value);
+          showSaved(guardadoArriba);
+        }catch{}
+      }, 600);
+
+      const autoSaveBot = debounce(()=>{
+        try{
+          localStorage.setItem(KEYS.textoAbajo, textoAbajo.value);
+          showSaved(guardadoAbajo);
+        }catch{}
+      }, 600);
+
+      textoArriba.addEventListener('input', autoSaveTop);
+      textoAbajo.addEventListener('input', autoSaveBot);
+
+      function saveTitleTop(){ try{ localStorage.setItem(KEYS.tituloArriba, tituloArriba.textContent.trim()); }catch{} }
+      function saveTitleBot(){ try{ localStorage.setItem(KEYS.tituloAbajo,  tituloAbajo.textContent.trim()); }catch{} }
+      tituloArriba.addEventListener('blur', saveTitleTop);
+      tituloAbajo.addEventListener('blur', saveTitleBot);
+      tituloArriba.addEventListener('keydown', (e)=>{ if(e.key==='Enter'){ e.preventDefault(); tituloArriba.blur(); } });
+      tituloAbajo.addEventListener('keydown', (e)=>{ if(e.key==='Enter'){ e.preventDefault(); tituloAbajo.blur(); } });
+
+    })();
+  </script>
+</body>
+</html>
