@@ -6,6 +6,7 @@
   <title>Tinta de Corazones</title>
   <!-- Fuentes estilo tattoo -->
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+
   <style>
     :root{
       --ink:#f00a0a;
@@ -15,26 +16,18 @@
     }
     *{box-sizing:border-box}
     html,body{height:100%}
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-WMC03ZRBJH"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'G-WMC03ZRBJH');
-</script>
- body {
-  margin: 0;
-  font-family: 'Montserrat', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  color: var(--ink);
-  background:
-    url('ornamental.png') no-repeat center center fixed,
-    radial-gradient(1200px 600px at 50% -20%, rgba(235, 6, 6, 0.06), transparent 60%),
-    radial-gradient(1000px 500px at 50% 120%, rgba(228, 5, 5, 0.05), transparent 60%),
-    linear-gradient(180deg, #fff, var(--paper));
-  background-attachment: fixed, fixed, fixed, fixed;
-}
+    body {
+      margin: 0;
+      font-family: 'Montserrat', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--ink);
+      background:
+        url('ornamental.png') no-repeat center center fixed,
+        radial-gradient(1200px 600px at 50% -20%, rgba(235, 6, 6, 0.06), transparent 60%),
+        radial-gradient(1000px 500px at 50% 120%, rgba(228, 5, 5, 0.05), transparent 60%),
+        linear-gradient(180deg, #fff, var(--paper));
+      background-attachment: fixed, fixed, fixed, fixed;
+    }
 
     /* Patrón sutil  tatuaje  */
     body:before{
@@ -45,7 +38,7 @@
     }
 
     .wrap{
-      max-width: 720px; 
+      max-width: 720px;
       margin: 0 auto;
       padding: env(safe-area-inset-top) 12px calc(16px + env(safe-area-inset-bottom));
       display:flex; flex-direction:column; gap:18px;
@@ -135,56 +128,131 @@
     .footer{ text-align:center; font-size:12px; opacity:.6; padding:6px 0 16px }
 
     @media (min-width: 540px){ textarea{ min-height:160px } }
+
+    /* ===========================
+       Estilos del overlay de contraseña
+       =========================== */
+    #login-overlay{
+      position:fixed;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background: rgba(250,247,243,0.98);
+      z-index:9999;
+      padding:20px;
+    }
+    .login-card{
+      width:100%;
+      max-width:420px;
+      background: linear-gradient(180deg,#fff, #fffaf6);
+      border-radius:12px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.12);
+      padding:22px;
+      text-align:center;
+      border:2px solid rgba(0,0,0,0.06);
+    }
+    .login-card h2{
+      margin:0 0 6px; font-size:20px; color:var(--accent);
+      font-weight:600;
+    }
+    .login-card p.lead{ margin:0 0 14px; opacity:.8; font-size:14px; }
+    .login-card input[type="password"]{
+      width:100%; padding:12px 14px; border-radius:10px; border:1.5px solid rgba(0,0,0,0.12);
+      font-size:16px; outline:none; box-sizing:border-box;
+    }
+    .login-actions{
+      margin-top:12px; display:flex; align-items:center; justify-content:space-between; gap:12px;
+    }
+    #login-button{
+      flex:0 0 auto;
+      padding:10px 16px; border-radius:10px; border:none; background:var(--accent); color:#fff; font-weight:700;
+      cursor:pointer;
+    }
+    .login-remember{ font-size:13px; opacity:.85; display:flex; align-items:center; gap:8px; justify-content:flex-start; }
+    .error{ color:#b71c1c; margin-top:10px; display:none; font-size:13px; }
+    @media (max-width:420px){
+      .login-actions{ flex-direction:column-reverse; align-items:stretch; }
+      .login-remember{ justify-content:center; }
+    }
   </style>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WMC03ZRBJH"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-WMC03ZRBJH');
+  </script>
 </head>
+
 <body>
-  <div class="wrap">
-    <header class="header">
-      <div class="brand" aria-label="Tinta de Corazones"><strong>Tinta de Corazones</strong></div>
-      <div class="subtitle"><strong>Dos cuadros. Dos voces. Una conexión y un mismo latido.</strong></div>
-      <svg class="heart" viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M12 21s-6.716-4.224-9.2-8.133C.62 9.252 2.824 5.5 6.4 5.5c2.056 0 3.352 1.067 3.996 2.138C11.04 6.567 12.336 5.5 14.392 5.5c3.576 0 5.78 3.752 3.6 7.367C18.716 16.776 12 21 12 21z" fill="currentColor"/>
-      </svg>
-    </header>
-
-    <!-- PANEL ARRIBA -->
-    <section class="panel" id="panel-arriba">
-      <h2>
-        <span class="status" id="status-arriba" aria-live="polite"></span>
-        <span class="editable-title" id="titulo-arriba" contenteditable="true" role="textbox" aria-label="Título de arriba">Tus palabras mi niña 💋</span>
-      </h2>
-      <textarea id="texto-arriba" placeholder="Escribe aquí…"></textarea>
-      <div class="controls">
-        <div class="left-controls">
-          <button class="btn" id="guardar-arriba">
-            Guardar
-            <span class="splash"></span>
-          </button>
-          <button class="btn secondary" id="borrar-arriba" title="Vaciar este cuadro">Vaciar</button>
-        </div>
-        <div class="status" id="guardado-arriba" aria-live="polite"></div>
+  <!-- OVERLAY DE CONTRASEÑA -->
+  <div id="login-overlay" role="dialog" aria-modal="true" aria-label="Acceso protegido">
+    <div class="login-card" role="document">
+      <h2>Acceso protegido</h2>
+      <p class="lead">Introduce la contraseña para desbloquear la página</p>
+      <input id="password-input" type="password" inputmode="text" autocomplete="current-password"
+             placeholder="Contraseña" aria-label="Contraseña" />
+      <div class="login-actions">
+        <label class="login-remember"><input id="remember-me" type="checkbox" /> Recordarme</label>
+        <button id="login-button" type="button">Entrar</button>
       </div>
-    </section>
+      <p id="error-msg" class="error" role="alert">Contraseña incorrecta</p>
+    </div>
+  </div>
 
-    <!-- PANEL ABAJO -->
-    <section class="panel" id="panel-abajo">
-      <h2>
-        <span class="status" id="status-abajo" aria-live="polite"></span>
-        <span class="editable-title" id="titulo-abajo" contenteditable="true" role="textbox" aria-label="Título de abajo">Mis palabras para mi niña ❤️</span>
-      </h2>
-      <textarea id="texto-abajo" placeholder="Escribe aquí…"></textarea>
-      <div class="controls">
-        <div class="left-controls">
-          <button class="btn" id="guardar-abajo">
-            Guardar
-            <span class="splash"></span>
-          </button>
-          <button class="btn secondary" id="borrar-abajo" title="Vaciar este cuadro">Vaciar</button>
+  <!-- CONTENIDO (oculto hasta introducir contraseña) -->
+  <div id="contenido" style="display:none;" aria-hidden="true">
+    <div class="wrap">
+      <header class="header">
+        <div class="brand" aria-label="Tinta de Corazones"><strong>Tinta de Corazones</strong></div>
+        <div class="subtitle"><strong>Dos cuadros. Dos voces. Una conexión y un mismo latido.</strong></div>
+        <svg class="heart" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 21s-6.716-4.224-9.2-8.133C.62 9.252 2.824 5.5 6.4 5.5c2.056 0 3.352 1.067 3.996 2.138C11.04 6.567 12.336 5.5 14.392 5.5c3.576 0 5.78 3.752 3.6 7.367C18.716 16.776 12 21 12 21z" fill="currentColor"/>
+        </svg>
+      </header>
+
+      <!-- PANEL ARRIBA -->
+      <section class="panel" id="panel-arriba">
+        <h2>
+          <span class="status" id="status-arriba" aria-live="polite"></span>
+          <span class="editable-title" id="titulo-arriba" contenteditable="true" role="textbox" aria-label="Título de arriba">Tus palabras mi niña 💋</span>
+        </h2>
+        <textarea id="texto-arriba" placeholder="Escribe aquí…"></textarea>
+        <div class="controls">
+          <div class="left-controls">
+            <button class="btn" id="guardar-arriba">
+              Guardar
+              <span class="splash"></span>
+            </button>
+            <button class="btn secondary" id="borrar-arriba" title="Vaciar este cuadro">Vaciar</button>
+          </div>
+          <div class="status" id="guardado-arriba" aria-live="polite"></div>
         </div>
-        <div class="status" id="guardado-abajo" aria-live="polite"></div>
-      </div>
-    </section>
+      </section>
 
+      <!-- PANEL ABAJO -->
+      <section class="panel" id="panel-abajo">
+        <h2>
+          <span class="status" id="status-abajo" aria-live="polite"></span>
+          <span class="editable-title" id="titulo-abajo" contenteditable="true" role="textbox" aria-label="Título de abajo">Mis palabras para mi niña ❤️</span>
+        </h2>
+        <textarea id="texto-abajo" placeholder="Escribe aquí…"></textarea>
+        <div class="controls">
+          <div class="left-controls">
+            <button class="btn" id="guardar-abajo">
+              Guardar
+              <span class="splash"></span>
+            </button>
+            <button class="btn secondary" id="borrar-abajo" title="Vaciar este cuadro">Vaciar</button>
+          </div>
+          <div class="status" id="guardado-abajo" aria-live="polite"></div>
+        </div>
+      </section>
+
+    </div>
   </div>
 
   <!-- Inicialización de Firebase (módulo) -->
@@ -210,6 +278,104 @@
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const analytics = getAnalytics(app);
+  </script>
+
+  <!-- Script: login de contraseña (cliente) -->
+  <script>
+    (function () {
+      // Cambia aquí la contraseña si quieres
+      const PASSWORD = "corazon123";
+
+      const overlay = document.getElementById('login-overlay');
+      const content = document.getElementById('contenido');
+      const input = document.getElementById('password-input');
+      const loginButton = document.getElementById('login-button');
+      const rememberCheckbox = document.getElementById('remember-me');
+      const errorMsg = document.getElementById('error-msg');
+
+      function showContent() {
+        overlay.style.display = 'none';
+        content.style.display = '';
+        content.setAttribute('aria-hidden', 'false');
+      }
+      function hideContent() {
+        overlay.style.display = 'flex';
+        content.style.display = 'none';
+        content.setAttribute('aria-hidden', 'true');
+      }
+
+      function isPersistUnlocked() {
+        try {
+          return localStorage.getItem('tinta.unlocked') === '1' || sessionStorage.getItem('tinta.unlocked') === '1';
+        } catch (e) { return false; }
+      }
+
+      function setPersistUnlocked(persist) {
+        try {
+          if (persist) {
+            localStorage.setItem('tinta.unlocked', '1');
+            sessionStorage.removeItem('tinta.unlocked');
+          } else {
+            sessionStorage.setItem('tinta.unlocked', '1');
+            localStorage.removeItem('tinta.unlocked');
+          }
+        } catch (e) { /* ignorar si storage no disponible */ }
+      }
+
+      function clearPersistUnlocked() {
+        try {
+          localStorage.removeItem('tinta.unlocked');
+          sessionStorage.removeItem('tinta.unlocked');
+        } catch (e) {}
+      }
+
+      function checkPassword() {
+        const val = (input.value || '').trim();
+        if (val === PASSWORD) {
+          errorMsg.style.display = 'none';
+          setPersistUnlocked(rememberCheckbox.checked);
+          showContent();
+          // limpiar campo contraseña por seguridad
+          input.value = '';
+          // mover foco al primer campo editable
+          const firstEditable = document.querySelector('.editable-title, textarea, button');
+          if (firstEditable) firstEditable.focus();
+        } else {
+          errorMsg.style.display = 'block';
+          // ligero efecto para indicar error
+          input.focus();
+        }
+      }
+
+      // Atajos de teclado
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          checkPassword();
+        }
+      });
+      loginButton.addEventListener('click', checkPassword);
+
+      // Focus trap: evita que el foco salga del overlay si está visible
+      document.addEventListener('focusin', function (e) {
+        const overlayVisible = overlay && overlay.style.display !== 'none';
+        if (overlayVisible && !overlay.contains(e.target)) {
+          e.stopPropagation();
+          input.focus();
+        }
+      });
+
+      // Si ya está desbloqueado en storage, mostrar contenido sin pedir contraseña
+      if (isPersistUnlocked()) {
+        showContent();
+      } else {
+        hideContent();
+        // poner foco en el input al cargar
+        setTimeout(() => { input.focus(); }, 50);
+      }
+
+      // Por si quieres forzar el bloqueo desde la consola (opcional):
+      window.__tinta_clear_unlock = clearPersistUnlocked;
+    })();
   </script>
 
   <!-- Tu script original -->
