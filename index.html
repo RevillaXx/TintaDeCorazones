@@ -255,16 +255,15 @@
     </div>
   </div>
 
-  <!-- Inicialización de Firebase (módulo) -->
+  <!-- Inicialización de Firebase + Firestore (módulo) -->
   <script type="module">
-    // Import the functions you need from the SDKs you need
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-analytics.js";
-    // TODO: Add SDKs for Firebase products that you want to use
-    // https://firebase.google.com/docs/web/setup#available-libraries
+    import {
+      getFirestore, doc, getDoc, setDoc, updateDoc, onSnapshot
+    } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
-    // Your web app's Firebase configuration
-    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    // Config de tu proyecto
     const firebaseConfig = {
       apiKey: "AIzaSyBCO7L2-ZRcP4ss_Q2x-N16CgMvSkHiszE",
       authDomain: "tinta-de-corazones.firebaseapp.com",
@@ -275,15 +274,79 @@
       measurementId: "G-1BP47R7DYW"
     };
 
-    // Initialize Firebase
+    // Init
     const app = initializeApp(firebaseConfig);
     const analytics = getAnalytics(app);
+    const db = getFirestore(app);
+
+    // === Ajusta estos "strings" si algún día cambias nombres/ids ===
+    const COLLECTION = 'tinta de corazones';          // nombre exacto de tu colección
+    const DOC_ID     = 'jxzq30i2Yz0qXEdwqiWs';        // id del documento que ya creaste
+    const FIELD_REINA = 'textoreina';                 // campo string (arriba)
+    const FIELD_REY   = 'textorey';                   // campo string (abajo)
+
+    // Utilidades
+    const $ = (s) => document.querySelector(s);
+    const textoArriba = $('#texto-arriba');
+    const textoAbajo  = $('#texto-abajo');
+    const btnArriba   = $('#guardar-arriba');
+    const btnAbajo    = $('#guardar-abajo');
+
+    function debounce(fn, ms){ let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a), ms); }; }
+
+    let syncStarted = false;
+
+    async function startFirestoreSync(){
+      if (syncStarted) return;
+      syncStarted = true;
+
+      const ref = doc(db, COLLECTION, DOC_ID);
+
+      // Garantiza que el doc exista con los campos por defecto
+      try {
+        const snap = await getDoc(ref);
+        if (!snap.exists()) {
+          await setDoc(ref, { [FIELD_REINA]: '', [FIELD_REY]: '' });
+        }
+      } catch(e){ console.warn('No se pudo inicializar el doc:', e); }
+
+      // Escucha en tiempo real y refleja en los textareas
+      onSnapshot(ref, (snap)=>{
+        const data = snap.data() || {};
+        const top = data[FIELD_REINA] ?? '';
+        const bot = data[FIELD_REY] ?? '';
+        if (document.activeElement !== textoArriba && textoArriba.value !== top) textoArriba.value = top;
+        if (document.activeElement !== textoAbajo  && textoAbajo.value  !== bot) textoAbajo.value  = bot;
+      });
+
+      // Guardados manuales
+      async function saveTop(){ try{ await updateDoc(ref, { [FIELD_REINA]: textoArriba.value }); }catch(e){ console.warn(e); } }
+      async function saveBot(){ try{ await updateDoc(ref, { [FIELD_REY]: textoAbajo.value  }); }catch(e){ console.warn(e); } }
+
+      // Evita adjuntar dos veces si recargas el sync
+      if (!btnArriba.dataset.fsBound) {
+        btnArriba.addEventListener('click', saveTop);
+        btnAbajo.addEventListener('click', saveBot);
+
+        // Auto-guardado a Firestore
+        const autoSaveTopFS = debounce(saveTop, 800);
+        const autoSaveBotFS = debounce(saveBot, 800);
+        textoArriba.addEventListener('input', autoSaveTopFS);
+        textoAbajo .addEventListener('input', autoSaveBotFS);
+
+        btnArriba.dataset.fsBound = '1';
+        btnAbajo.dataset.fsBound  = '1';
+      }
+    }
+
+    // Expone la función para que el login la invoque al desbloquear
+    window.__tinta_start_sync = startFirestoreSync;
   </script>
 
   <!-- Script: login de contraseña (cliente) -->
   <script>
     (function () {
-      // Cambia aquí la contraseña si quieres
+      // Cambia aquí la contraseña si quieres (solo protege la UI)
       const PASSWORD = "graciasporcruzarteenmicamino,notienesideadeloquevales";
 
       const overlay = document.getElementById('login-overlay');
@@ -297,6 +360,8 @@
         overlay.style.display = 'none';
         content.style.display = '';
         content.setAttribute('aria-hidden', 'false');
+        // Inicia la sincronización con Firestore al desbloquear
+        if (window.__tinta_start_sync) window.__tinta_start_sync();
       }
       function hideContent() {
         overlay.style.display = 'flex';
@@ -335,27 +400,18 @@
           errorMsg.style.display = 'none';
           setPersistUnlocked(rememberCheckbox.checked);
           showContent();
-          // limpiar campo contraseña por seguridad
           input.value = '';
-          // mover foco al primer campo editable
           const firstEditable = document.querySelector('.editable-title, textarea, button');
           if (firstEditable) firstEditable.focus();
         } else {
           errorMsg.style.display = 'block';
-          // ligero efecto para indicar error
           input.focus();
         }
       }
 
-      // Atajos de teclado
-      input.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
-          checkPassword();
-        }
-      });
+      input.addEventListener('keydown', (e) => { if (e.key === 'Enter') checkPassword(); });
       loginButton.addEventListener('click', checkPassword);
 
-      // Focus trap: evita que el foco salga del overlay si está visible
       document.addEventListener('focusin', function (e) {
         const overlayVisible = overlay && overlay.style.display !== 'none';
         if (overlayVisible && !overlay.contains(e.target)) {
@@ -364,21 +420,18 @@
         }
       });
 
-      // Si ya está desbloqueado en storage, mostrar contenido sin pedir contraseña
       if (isPersistUnlocked()) {
         showContent();
       } else {
         hideContent();
-        // poner foco en el input al cargar
         setTimeout(() => { input.focus(); }, 50);
       }
 
-      // Por si quieres forzar el bloqueo desde la consola (opcional):
-      window.__tinta_clear_unlock = clearPersistUnlocked;
+      window.__tinta_clear_unlock = clearPersistUnlocked; // útil desde consola
     })();
   </script>
 
-  <!-- Tu script original -->
+  <!-- Tu script original: guarda en localStorage (respaldo) -->
   <script>
     (function(){
       const KEYS = {
