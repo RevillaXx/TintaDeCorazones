@@ -1,270 +1,106 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Tinta de Corazones</title>
-  <!-- Fuentes estilo tattoo -->
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tinta de Corazones</title>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
 
-  <style>
-    :root{
-      --ink:#f00a0a;
-      --paper:#faf7f3;
-      --accent:#cc2a49;
-      --accent-2:#067458;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
+<style>
+  :root{
+    --ink: #f00a0a;
+    --paper: #faf7f3;
+    --accent: #cc2a49;
+    --accent-2: #067458;
+  }
+  * { box-sizing: border-box; margin:0; padding:0; }
+  html, body { height: 100%; font-family: 'Montserrat', sans-serif; }
 
-    body {
-      margin: 0;
-      font-family: 'Montserrat', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      color: var(--ink);
-      background:
-        url('ornamental.png') no-repeat center center fixed,
-        radial-gradient(1200px 600px at 50% -20%, rgba(235, 6, 6, 0.06), transparent 60%),
-        radial-gradient(1000px 500px at 50% 120%, rgba(228, 5, 5, 0.05), transparent 60%),
-        linear-gradient(180deg, #fff, var(--paper));
-      background-attachment: fixed, fixed, fixed, fixed;
-    }
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    background-image: url('55b79f31-88a8-4087-9c3d-b8d139fcbf34.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    overflow: hidden;
+  }
 
-    body:before{
-      content:"";
-      position:fixed; inset:0; pointer-events:none; opacity:.06;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cg fill='none' stroke='%23000' stroke-width='1.2' opacity='.8'%3E%3Cpath d='M30 40c10 6 20 6 30 0-7 10-12 20-10 32-9-7-15-17-20-32z'/%3E%3Cpath d='M130 120c-10-6-20-6-30 0 7-10 12-20 10-32 9 7 15 17 20 32z'/%3E%3C/g%3E%3C/svg%3E");
-      background-size:160px 160px;
-    }
+  /* MENSAJE ROMÁNTICO */
+  .mensaje-animado {
+    text-align: center;
+    color: red;
+  }
 
-    .wrap{
-      max-width: 720px;
-      margin: 0 auto;
-      padding: env(safe-area-inset-top) 12px calc(16px + env(safe-area-inset-bottom));
-      display:flex; flex-direction:column; gap:18px;
-      min-height:100dvh;
-    }
+  .mensaje-animado h1, .mensaje-animado h2 {
+    font-family: 'Great Vibes', cursive;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: .15em solid currentColor;
+    display: inline-block;
+    opacity: 0;
+  }
 
-    .header{
-      text-align:center; padding:14px 10px 0;
-    }
-    .brand{
-      font-family:'Great Vibes', cursive; font-size: 42px; line-height:5;
-      letter-spacing:.8px; margin:18px 0 16px; position:relative;
-      display:inline-block;
-    }
-    .brand:after{
-      content:""; position:absolute; left:0; right:0; bottom:-6px; height:20px;
-      background: conic-gradient(from 180deg at 50% 50%, var(--accent), var(--accent-2), var(--accent));
-      clip-path: polygon(0 60%, 8% 40%, 16% 55%, 24% 35%, 32% 58%, 40% 42%, 48% 60%, 56% 40%, 64% 55%, 72% 35%, 80% 58%, 88% 42%, 96% 60%, 100% 50%, 100% 100%, 0 100%);
-      transform: scaleX(0);
-      transform-origin:left;
-      animation: draw-ink 2.4s ease .3s forwards;
-      border-radius:6px;
-      opacity:.8;
-    }
-    @keyframes draw-ink{to{transform:scaleX(1)}}
+  .mensaje-animado h1 {
+    font-size: 64px;
+    animation: colorChange 3s infinite alternate;
+  }
 
-    .subtitle{font-size:27px; opacity:.7}
+  .mensaje-animado h2 {
+    font-size: 40px;
+    margin-top: 20px;
+    animation: colorChange 3s infinite alternate;
+  }
 
-    .heart{
-      align-self:center; width:54px; height:54px; position:relative; margin:4px 0 0;
-      filter: drop-shadow(0 2px 4px rgba(247, 245, 245, 0.15));
-      animation: pulse 1.8s infinite ease-in-out;
-    }
-    @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
-
-    /* ANIMACIÓN MENSAJE ROMÁNTICO */
-    .mensaje-animado {
-      text-align: center;
-      margin: 32px 0;
-      font-family: 'Great Vibes', cursive;
-    }
-    .mensaje-animado h1, .mensaje-animado h2 {
-      white-space: nowrap;
-      overflow: hidden;
-      border-right: .15em solid currentColor;
-      display: inline-block;
-    }
-    .mensaje-animado h1 {
-      font-size: 48px;
-      margin: 0;
-      animation: colorChange 3s infinite alternate;
-    }
-    .mensaje-animado h2 {
-      font-size: 28px;
-      margin: 12px 0 0;
-      opacity: 0;
-      animation: colorChange 3s infinite alternate;
-    }
-    @keyframes colorChange {
-      0% { color: red; }
-      50% { color: black; }
-      100% { color: purple; }
-    }
-
-    /* Resto de tus estilos de paneles, botones, textarea… (omito por brevedad) */
-
-  </style>
+  @keyframes colorChange {
+    0% { color: red; }
+    50% { color: black; }
+    100% { color: purple; }
+  }
+</style>
 </head>
-
 <body>
-  <!-- OVERLAY DE CONTRASEÑA -->
-  <div id="login-overlay" role="dialog" aria-modal="true" aria-label="Acceso protegido">
-    <div class="login-card" role="document">
-      <h2>Acceso protegido</h2>
-      <p class="lead">Introduce la contraseña para desbloquear la página</p>
-      <input id="password-input" type="password" inputmode="text" autocomplete="current-password"
-             placeholder="Contraseña" aria-label="Contraseña" />
-      <div class="login-actions">
-        <label class="login-remember"><input id="remember-me" type="checkbox" /> Recordarme</label>
-        <button id="login-button" type="button">Entrar</button>
-      </div>
-      <p id="error-msg" class="error" role="alert">Contraseña incorrecta</p>
-    </div>
-  </div>
 
-  <!-- CONTENIDO -->
-  <div id="contenido" style="display:none;" aria-hidden="true">
-    <div class="wrap">
+<div class="mensaje-animado" aria-label="Mensaje especial">
+  <h1 id="mensaje-linea1"></h1>
+  <h2 id="mensaje-linea2"></h2>
+</div>
 
-      <!-- MENSAJE ANIMADO -->
-      <div class="mensaje-animado" aria-label="Mensaje especial">
-        <h1 id="mensaje-linea1"></h1>
-        <h2 id="mensaje-linea2"></h2>
-      </div>
+<script>
+  const linea1 = "Te quiero muchísimo";
+  const linea2 = "Gracias por cruzarte en mi camino";
 
-      <!-- PANEL ARRIBA -->
-      <section class="panel" id="panel-arriba">
-        <h2>
-          <span class="status" id="status-arriba" aria-live="polite"></span>
-          <span class="editable-title" id="titulo-arriba" contenteditable="true" role="textbox" aria-label="Título de arriba">Tus palabras mi niña 💋</span>
-        </h2>
-        <textarea id="texto-arriba" placeholder="Escribe aquí…"></textarea>
-        <div class="controls">
-          <div class="left-controls">
-            <button class="btn" id="guardar-arriba">
-              Guardar
-              <span class="splash"></span>
-            </button>
-            <button class="btn secondary" id="borrar-arriba" title="Vaciar este cuadro">Vaciar</button>
-          </div>
-          <div class="status" id="guardado-arriba" aria-live="polite"></div>
-        </div>
-      </section>
+  const h1 = document.getElementById("mensaje-linea1");
+  const h2 = document.getElementById("mensaje-linea2");
 
-      <!-- PANEL ABAJO -->
-      <section class="panel" id="panel-abajo">
-        <h2>
-          <span class="status" id="status-abajo" aria-live="polite"></span>
-          <span class="editable-title" id="titulo-abajo" contenteditable="true" role="textbox" aria-label="Título de abajo">Mis palabras para mi niña ❤️</span>
-        </h2>
-        <textarea id="texto-abajo" placeholder="Escribe aquí…"></textarea>
-        <div class="controls">
-          <div class="left-controls">
-            <button class="btn" id="guardar-abajo">
-              Guardar
-              <span class="splash"></span>
-            </button>
-            <button class="btn secondary" id="borrar-abajo" title="Vaciar este cuadro">Vaciar</button>
-          </div>
-          <div class="status" id="guardado-abajo" aria-live="polite"></div>
-        </div>
-      </section>
-
-    </div>
-  </div>
-
-  <!-- SCRIPT LOGIN Y ANIMACIÓN -->
-  <script>
-    (function () {
-      const PASSWORD = "graciasporcruzarteenmicamino,notienesideadeloquevales";
-
-      const overlay = document.getElementById('login-overlay');
-      const content = document.getElementById('contenido');
-      const input = document.getElementById('password-input');
-      const loginButton = document.getElementById('login-button');
-      const rememberCheckbox = document.getElementById('remember-me');
-      const errorMsg = document.getElementById('error-msg');
-
-      function showContent() {
-        overlay.style.display = 'none';
-        content.style.display = '';
-        content.setAttribute('aria-hidden', 'false');
-        if (window.__tinta_start_sync) window.__tinta_start_sync();
-        if (window.__tinta_mostrarMensaje) window.__tinta_mostrarMensaje();
-      }
-
-      function hideContent() {
-        overlay.style.display = 'flex';
-        content.style.display = 'none';
-        content.setAttribute('aria-hidden', 'true');
-      }
-
-      function isPersistUnlocked() {
-        try { return localStorage.getItem('tinta.unlocked') === '1' || sessionStorage.getItem('tinta.unlocked') === '1'; }
-        catch (e) { return false; }
-      }
-
-      function setPersistUnlocked(persist) {
-        try {
-          if (persist) { localStorage.setItem('tinta.unlocked', '1'); sessionStorage.removeItem('tinta.unlocked'); }
-          else { sessionStorage.setItem('tinta.unlocked', '1'); localStorage.removeItem('tinta.unlocked'); }
-        } catch (e) {}
-      }
-
-      function clearPersistUnlocked() {
-        try { localStorage.removeItem('tinta.unlocked'); sessionStorage.removeItem('tinta.unlocked'); } catch (e) {}
-      }
-
-      function checkPassword() {
-        const val = (input.value || '').trim();
-        if (val === PASSWORD) {
-          errorMsg.style.display = 'none';
-          setPersistUnlocked(rememberCheckbox.checked);
-          showContent();
-          input.value = '';
-        } else { errorMsg.style.display = 'block'; input.focus(); }
-      }
-
-      input.addEventListener('keydown', (e) => { if (e.key === 'Enter') checkPassword(); });
-      loginButton.addEventListener('click', checkPassword);
-
-      if (isPersistUnlocked()) { showContent(); } else { hideContent(); setTimeout(() => { input.focus(); }, 50); }
-
-      window.__tinta_clear_unlock = clearPersistUnlocked;
-    })();
-
-    // === Animación de mensaje romántico ===
-    const linea1 = "Te quiero muchísimo";
-    const linea2 = "Gracias por cruzarte en mi camino";
-
-    const h1 = document.getElementById("mensaje-linea1");
-    const h2 = document.getElementById("mensaje-linea2");
-
-    function typeWriter() {
-      let i = 0;
-      function typeLinea1() {
-        if (i < linea1.length) {
-          h1.textContent += linea1.charAt(i);
-          i++;
-          setTimeout(typeLinea1, 100);
-        } else {
-          h2.style.opacity = 1;
-          let j = 0;
-          function typeLinea2() {
-            if (j < linea2.length) {
-              h2.textContent += linea2.charAt(j);
-              j++;
-              setTimeout(typeLinea2, 80);
-            }
+  function typeWriter() {
+    let i = 0;
+    h1.style.opacity = 1;
+    function typeLinea1() {
+      if (i < linea1.length) {
+        h1.textContent += linea1.charAt(i);
+        i++;
+        setTimeout(typeLinea1, 100);
+      } else {
+        h2.style.opacity = 1;
+        let j = 0;
+        function typeLinea2() {
+          if (j < linea2.length) {
+            h2.textContent += linea2.charAt(j);
+            j++;
+            setTimeout(typeLinea2, 80);
           }
-          typeLinea2();
         }
+        typeLinea2();
       }
-      typeLinea1();
     }
+    typeLinea1();
+  }
 
-    window.__tinta_mostrarMensaje = function() { typeWriter(); }
-  </script>
+  window.onload = typeWriter;
+</script>
+
 </body>
 </html>
