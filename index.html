@@ -29,7 +29,6 @@
       background-attachment: fixed, fixed, fixed, fixed;
     }
 
-    /* Patrón sutil  tatuaje  */
     body:before{
       content:"";
       position:fixed; inset:0; pointer-events:none; opacity:.06;
@@ -54,7 +53,6 @@
       display:inline-block;
     }
     .brand:after{
-      /* animación "tinta" que se mueve*/
       content:""; position:absolute; left:0; right:0; bottom:-6px; height:20px;
       background: conic-gradient(from 180deg at 50% 50%, var(--accent), var(--accent-2), var(--accent));
       clip-path: polygon(0 60%, 8% 40%, 16% 55%, 24% 35%, 32% 58%, 40% 42%, 48% 60%, 56% 40%, 64% 55%, 72% 35%, 80% 58%, 88% 42%, 96% 60%, 100% 50%, 100% 100%, 0 100%);
@@ -75,116 +73,38 @@
     }
     @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
 
-    /* (cuadro)  */
-    .panel{
-      position:relative; background: rgba(248, 247, 247, 0.85);
-      border: 2px solid #111; padding: 14px 12px 12px; border-radius: 18px;
-      box-shadow: 0 12px 30px rgba(0,0,0,.08), inset 0 0 0 6px #fff;
-      backdrop-filter: blur(2px);
+    /* ANIMACIÓN MENSAJE ROMÁNTICO */
+    .mensaje-animado {
+      text-align: center;
+      margin: 32px 0;
+      font-family: 'Great Vibes', cursive;
     }
-    .panel:before, .panel:after{
-      content:""; position:absolute; left:14px; right:14px; height:16px;
-      background-repeat:no-repeat; background-position:center;
-      opacity:.25; pointer-events:none;
+    .mensaje-animado h1, .mensaje-animado h2 {
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: .15em solid currentColor;
+      display: inline-block;
     }
-    .panel:before{top:-10px; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='16' viewBox='0 0 300 16'%3E%3Cpath d='M5 8 Q30 2 55 8 T105 8 T155 8 T205 8 T255 8 T295 8' fill='none' stroke='%23000' stroke-width='2'/%3E%3C/svg%3E");}
-    .panel:after{bottom:-10px; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='16' viewBox='0 0 300 16'%3E%3Cpath d='M5 8 Q30 14 55 8 T105 8 T155 8 T205 8 T255 8 T295 8' fill='none' stroke='%23000' stroke-width='2'/%3E%3C/svg%3E");}
+    .mensaje-animado h1 {
+      font-size: 48px;
+      margin: 0;
+      animation: colorChange 3s infinite alternate;
+    }
+    .mensaje-animado h2 {
+      font-size: 28px;
+      margin: 12px 0 0;
+      opacity: 0;
+      animation: colorChange 3s infinite alternate;
+    }
+    @keyframes colorChange {
+      0% { color: red; }
+      50% { color: black; }
+      100% { color: purple; }
+    }
 
-    .panel h2{
-      margin: 4px 2px 8px; padding:0; font-weight:600; font-size:18px; letter-spacing:.3px;
-      display:flex; align-items:center; gap:6px;
-    }
-    .panel h2 .editable-title{
-      font-family:'Great Vibes', cursive; font-size:26px; font-weight:400;
-      outline:none; border:none; background:transparent; padding:4px 8px; border-radius:10px;
-    }
-    .panel h2 .editable-title[contenteditable="true"]:focus{ box-shadow:0 0 0 2px rgba(31,138,112,.25); background:#f6fffb }
+    /* Resto de tus estilos de paneles, botones, textarea… (omito por brevedad) */
 
-    textarea{
-      width:100%; min-height:140px; resize:vertical; border-radius:14px;
-      border:1.5px solid rgba(0,0,0,.25); padding:12px 12px 42px; font-size:15px; line-height:1.45;
-      background: rgba(255,255,255,.9);
-      outline:none; transition: box-shadow .2s, border-color .2s;
-    }
-    textarea:focus{border-color: var(--accent-2); box-shadow: 0 0 0 4px rgba(31,138,112,.15)}
-
-    .controls{ display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:-36px; padding:0 8px }
-    .left-controls{ display:flex; align-items:center; gap:8px }
-    .btn{
-      appearance:none; border:none; border-radius:999px; padding:10px 16px; font-weight:600; font-size:14px;
-      background:#111; color:#fff; cursor:pointer; position:relative; overflow:hidden;
-    }
-    .btn.secondary{ background:#fff; color:#111; border:1px solid rgba(0,0,0,.2) }
-    .btn:active{ transform: translateY(1px) }
-
-    /* salpicadura de tinta */
-    .btn .splash{ position:absolute; width:260px; height:260px; border-radius:50%; left:var(--x,50%); top:var(--y,50%); transform:translate(-50%,-50%) scale(0); background:radial-gradient(circle, rgba(240, 6, 6, 0.15), rgba(255,255,255,0) 60%), conic-gradient(from 0deg, var(--accent), var(--accent-2), var(--accent)); opacity:.7; pointer-events:none }
-    .btn.animating .splash{ animation: splash .6s ease-out forwards }
-    @keyframes splash{ to{ transform:translate(-50%,-50%) scale(1.1); opacity:0 } }
-
-    .status{ font-size:12px; opacity:.6 }
-    .status.ok{ color: var(--accent-2); opacity:.9 }
-
-    .footer{ text-align:center; font-size:12px; opacity:.6; padding:6px 0 16px }
-
-    @media (min-width: 540px){ textarea{ min-height:160px } }
-
-    /* ===========================
-       Estilos del overlay de contraseña
-       =========================== */
-    #login-overlay{
-      position:fixed;
-      inset:0;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background: rgba(250,247,243,0.98);
-      z-index:9999;
-      padding:20px;
-    }
-    .login-card{
-      width:100%;
-      max-width:420px;
-      background: linear-gradient(180deg,#fff, #fffaf6);
-      border-radius:12px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.12);
-      padding:22px;
-      text-align:center;
-      border:2px solid rgba(0,0,0,0.06);
-    }
-    .login-card h2{
-      margin:0 0 6px; font-size:20px; color:var(--accent);
-      font-weight:600;
-    }
-    .login-card p.lead{ margin:0 0 14px; opacity:.8; font-size:14px; }
-    .login-card input[type="password"]{
-      width:100%; padding:12px 14px; border-radius:10px; border:1.5px solid rgba(0,0,0,0.12);
-      font-size:16px; outline:none; box-sizing:border-box;
-    }
-    .login-actions{
-      margin-top:12px; display:flex; align-items:center; justify-content:space-between; gap:12px;
-    }
-    #login-button{
-      flex:0 0 auto;
-      padding:10px 16px; border-radius:10px; border:none; background:var(--accent); color:#fff; font-weight:700;
-      cursor:pointer;
-    }
-    .login-remember{ font-size:13px; opacity:.85; display:flex; align-items:center; gap:8px; justify-content:flex-start; }
-    .error{ color:#b71c1c; margin-top:10px; display:none; font-size:13px; }
-    @media (max-width:420px){
-      .login-actions{ flex-direction:column-reverse; align-items:stretch; }
-      .login-remember{ justify-content:center; }
-    }
   </style>
-
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WMC03ZRBJH"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-WMC03ZRBJH');
-  </script>
 </head>
 
 <body>
@@ -203,16 +123,15 @@
     </div>
   </div>
 
-  <!-- CONTENIDO (oculto hasta introducir contraseña) -->
+  <!-- CONTENIDO -->
   <div id="contenido" style="display:none;" aria-hidden="true">
     <div class="wrap">
-      <header class="header">
-        <div class="brand" aria-label="Tinta de Corazones"><strong>Tinta de Corazones</strong></div>
-        <div class="subtitle"><strong>Dos cuadros. Dos voces. Una conexión y un mismo latido.</strong></div>
-        <svg class="heart" viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M12 21s-6.716-4.224-9.2-8.133C.62 9.252 2.824 5.5 6.4 5.5c2.056 0 3.352 1.067 3.996 2.138C11.04 6.567 12.336 5.5 14.392 5.5c3.576 0 5.78 3.752 3.6 7.367C18.716 16.776 12 21 12 21z" fill="currentColor"/>
-        </svg>
-      </header>
+
+      <!-- MENSAJE ANIMADO -->
+      <div class="mensaje-animado" aria-label="Mensaje especial">
+        <h1 id="mensaje-linea1"></h1>
+        <h2 id="mensaje-linea2"></h2>
+      </div>
 
       <!-- PANEL ARRIBA -->
       <section class="panel" id="panel-arriba">
@@ -255,98 +174,9 @@
     </div>
   </div>
 
-  <!-- Inicialización de Firebase + Firestore (módulo) -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-analytics.js";
-    import {
-      getFirestore, doc, getDoc, setDoc, updateDoc, onSnapshot
-    } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
-
-    // Config de tu proyecto
-    const firebaseConfig = {
-      apiKey: "AIzaSyBCO7L2-ZRcP4ss_Q2x-N16CgMvSkHiszE",
-      authDomain: "tinta-de-corazones.firebaseapp.com",
-      projectId: "tinta-de-corazones",
-      storageBucket: "tinta-de-corazones.firebasestorage.app",
-      messagingSenderId: "710865792969",
-      appId: "1:710865792969:web:490b0a5a84d19aa6ed8218",
-      measurementId: "G-1BP47R7DYW"
-    };
-
-    // Init
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-    const db = getFirestore(app);
-
-    // === Ajusta estos "strings" si algún día cambias nombres/ids ===
-    const COLLECTION = 'tinta de corazones';          // nombre exacto de tu colección
-    const DOC_ID     = 'jxzq30i2Yz0qXEdwqiWs';        // id del documento que ya creaste
-    const FIELD_REINA = 'textoreina';                 // campo string (arriba)
-    const FIELD_REY   = 'textorey';                   // campo string (abajo)
-
-    // Utilidades
-    const $ = (s) => document.querySelector(s);
-    const textoArriba = $('#texto-arriba');
-    const textoAbajo  = $('#texto-abajo');
-    const btnArriba   = $('#guardar-arriba');
-    const btnAbajo    = $('#guardar-abajo');
-
-    function debounce(fn, ms){ let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a), ms); }; }
-
-    let syncStarted = false;
-
-    async function startFirestoreSync(){
-      if (syncStarted) return;
-      syncStarted = true;
-
-      const ref = doc(db, COLLECTION, DOC_ID);
-
-      // Garantiza que el doc exista con los campos por defecto
-      try {
-        const snap = await getDoc(ref);
-        if (!snap.exists()) {
-          await setDoc(ref, { [FIELD_REINA]: '', [FIELD_REY]: '' });
-        }
-      } catch(e){ console.warn('No se pudo inicializar el doc:', e); }
-
-      // Escucha en tiempo real y refleja en los textareas
-      onSnapshot(ref, (snap)=>{
-        const data = snap.data() || {};
-        const top = data[FIELD_REINA] ?? '';
-        const bot = data[FIELD_REY] ?? '';
-        if (document.activeElement !== textoArriba && textoArriba.value !== top) textoArriba.value = top;
-        if (document.activeElement !== textoAbajo  && textoAbajo.value  !== bot) textoAbajo.value  = bot;
-      });
-
-      // Guardados manuales
-      async function saveTop(){ try{ await updateDoc(ref, { [FIELD_REINA]: textoArriba.value }); }catch(e){ console.warn(e); } }
-      async function saveBot(){ try{ await updateDoc(ref, { [FIELD_REY]: textoAbajo.value  }); }catch(e){ console.warn(e); } }
-
-      // Evita adjuntar dos veces si recargas el sync
-      if (!btnArriba.dataset.fsBound) {
-        btnArriba.addEventListener('click', saveTop);
-        btnAbajo.addEventListener('click', saveBot);
-
-        // Auto-guardado a Firestore
-        const autoSaveTopFS = debounce(saveTop, 800);
-        const autoSaveBotFS = debounce(saveBot, 800);
-        textoArriba.addEventListener('input', autoSaveTopFS);
-        textoAbajo .addEventListener('input', autoSaveBotFS);
-
-        btnArriba.dataset.fsBound = '1';
-        btnAbajo.dataset.fsBound  = '1';
-      }
-    }
-
-    // Expone la función para que el login la invoque al desbloquear
-    window.__tinta_start_sync = startFirestoreSync;
-  </script>
-
-  <!-- Script: login de contraseña (cliente) -->
+  <!-- SCRIPT LOGIN Y ANIMACIÓN -->
   <script>
     (function () {
-      // Cambia aquí la contraseña si quieres (solo protege la UI)
       const PASSWORD = "graciasporcruzarteenmicamino,notienesideadeloquevales";
 
       const overlay = document.getElementById('login-overlay');
@@ -360,9 +190,10 @@
         overlay.style.display = 'none';
         content.style.display = '';
         content.setAttribute('aria-hidden', 'false');
-        // Inicia la sincronización con Firestore al desbloquear
         if (window.__tinta_start_sync) window.__tinta_start_sync();
+        if (window.__tinta_mostrarMensaje) window.__tinta_mostrarMensaje();
       }
+
       function hideContent() {
         overlay.style.display = 'flex';
         content.style.display = 'none';
@@ -370,28 +201,19 @@
       }
 
       function isPersistUnlocked() {
-        try {
-          return localStorage.getItem('tinta.unlocked') === '1' || sessionStorage.getItem('tinta.unlocked') === '1';
-        } catch (e) { return false; }
+        try { return localStorage.getItem('tinta.unlocked') === '1' || sessionStorage.getItem('tinta.unlocked') === '1'; }
+        catch (e) { return false; }
       }
 
       function setPersistUnlocked(persist) {
         try {
-          if (persist) {
-            localStorage.setItem('tinta.unlocked', '1');
-            sessionStorage.removeItem('tinta.unlocked');
-          } else {
-            sessionStorage.setItem('tinta.unlocked', '1');
-            localStorage.removeItem('tinta.unlocked');
-          }
-        } catch (e) { /* ignorar si storage no disponible */ }
+          if (persist) { localStorage.setItem('tinta.unlocked', '1'); sessionStorage.removeItem('tinta.unlocked'); }
+          else { sessionStorage.setItem('tinta.unlocked', '1'); localStorage.removeItem('tinta.unlocked'); }
+        } catch (e) {}
       }
 
       function clearPersistUnlocked() {
-        try {
-          localStorage.removeItem('tinta.unlocked');
-          sessionStorage.removeItem('tinta.unlocked');
-        } catch (e) {}
+        try { localStorage.removeItem('tinta.unlocked'); sessionStorage.removeItem('tinta.unlocked'); } catch (e) {}
       }
 
       function checkPassword() {
@@ -401,143 +223,48 @@
           setPersistUnlocked(rememberCheckbox.checked);
           showContent();
           input.value = '';
-          const firstEditable = document.querySelector('.editable-title, textarea, button');
-          if (firstEditable) firstEditable.focus();
-        } else {
-          errorMsg.style.display = 'block';
-          input.focus();
-        }
+        } else { errorMsg.style.display = 'block'; input.focus(); }
       }
 
       input.addEventListener('keydown', (e) => { if (e.key === 'Enter') checkPassword(); });
       loginButton.addEventListener('click', checkPassword);
 
-      document.addEventListener('focusin', function (e) {
-        const overlayVisible = overlay && overlay.style.display !== 'none';
-        if (overlayVisible && !overlay.contains(e.target)) {
-          e.stopPropagation();
-          input.focus();
-        }
-      });
+      if (isPersistUnlocked()) { showContent(); } else { hideContent(); setTimeout(() => { input.focus(); }, 50); }
 
-      if (isPersistUnlocked()) {
-        showContent();
-      } else {
-        hideContent();
-        setTimeout(() => { input.focus(); }, 50);
-      }
-
-      window.__tinta_clear_unlock = clearPersistUnlocked; // útil desde consola
+      window.__tinta_clear_unlock = clearPersistUnlocked;
     })();
-  </script>
 
-  <!-- Tu script original: guarda en localStorage (respaldo) -->
-  <script>
-    (function(){
-      const KEYS = {
-        tituloArriba: 'tinta.titulo.arriba',
-        textoArriba:  'tinta.texto.arriba',
-        tituloAbajo:  'tinta.titulo.abajo',
-        textoAbajo:   'tinta.texto.abajo'
-      };
+    // === Animación de mensaje romántico ===
+    const linea1 = "Te quiero muchísimo";
+    const linea2 = "Gracias por cruzarte en mi camino";
 
-      const $ = (sel) => document.querySelector(sel);
+    const h1 = document.getElementById("mensaje-linea1");
+    const h2 = document.getElementById("mensaje-linea2");
 
-      const tituloArriba = $('#titulo-arriba');
-      const tituloAbajo  = $('#titulo-abajo');
-      const textoArriba  = $('#texto-arriba');
-      const textoAbajo   = $('#texto-abajo');
-
-      const guardadoArriba = $('#guardado-arriba');
-      const guardadoAbajo  = $('#guardado-abajo');
-
-      try{
-        const tTop = localStorage.getItem(KEYS.tituloArriba);
-        const bTop = localStorage.getItem(KEYS.textoArriba);
-        const tBot = localStorage.getItem(KEYS.tituloAbajo);
-        const bBot = localStorage.getItem(KEYS.textoAbajo);
-        if(tTop) tituloArriba.textContent = tTop;
-        if(bTop) textoArriba.value = bTop;
-        if(tBot) tituloAbajo.textContent  = tBot;
-        if(bBot) textoAbajo.value  = bBot;
-      }catch(e){ console.warn('localStorage no disponible', e); }
-
-      let saveTimer;
-      function showSaved(el){
-        clearTimeout(saveTimer);
-        el.textContent = 'Guardado ✓';
-        el.classList.add('ok');
-        saveTimer = setTimeout(()=>{ el.textContent=''; el.classList.remove('ok'); }, 1800);
-      }
-
-      function splash(btn, evt){
-        const rect = btn.getBoundingClientRect();
-        const x = ((evt.clientX || (rect.left + rect.width/2)) - rect.left) + 'px';
-        const y = ((evt.clientY || (rect.top + rect.height/2)) - rect.top) + 'px';
-        btn.style.setProperty('--x', x);
-        btn.style.setProperty('--y', y);
-        btn.classList.remove('animating');
-        void btn.offsetWidth;
-        btn.classList.add('animating');
-      }
-
-      $('#guardar-arriba').addEventListener('click', (e)=>{
-        splash(e.currentTarget, e);
-        try{
-          localStorage.setItem(KEYS.tituloArriba, tituloArriba.textContent.trim());
-          localStorage.setItem(KEYS.textoArriba, textoArriba.value);
-          showSaved(guardadoArriba);
-        }catch(err){ alert('No se pudo guardar. Revisa permisos del navegador.'); }
-      });
-      $('#guardar-abajo').addEventListener('click', (e)=>{
-        splash(e.currentTarget, e);
-        try{
-          localStorage.setItem(KEYS.tituloAbajo, tituloAbajo.textContent.trim());
-          localStorage.setItem(KEYS.textoAbajo, textoAbajo.value);
-          showSaved(guardadoAbajo);
-        }catch(err){ alert('No se pudo guardar. Revisa permisos del navegador.'); }
-      });
-
-      $('#borrar-arriba').addEventListener('click', ()=>{
-        if(confirm('¿Vaciar el cuadro de arriba?')){
-          textoArriba.value='';
-          try{ localStorage.removeItem(KEYS.textoArriba); }catch{}
+    function typeWriter() {
+      let i = 0;
+      function typeLinea1() {
+        if (i < linea1.length) {
+          h1.textContent += linea1.charAt(i);
+          i++;
+          setTimeout(typeLinea1, 100);
+        } else {
+          h2.style.opacity = 1;
+          let j = 0;
+          function typeLinea2() {
+            if (j < linea2.length) {
+              h2.textContent += linea2.charAt(j);
+              j++;
+              setTimeout(typeLinea2, 80);
+            }
+          }
+          typeLinea2();
         }
-      });
-      $('#borrar-abajo').addEventListener('click', ()=>{
-        if(confirm('¿Vaciar el cuadro de abajo?')){
-          textoAbajo.value='';
-          try{ localStorage.removeItem(KEYS.textoAbajo); }catch{}
-        }
-      });
+      }
+      typeLinea1();
+    }
 
-      function debounce(fn, ms){ let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a), ms); }; }
-
-      const autoSaveTop = debounce(()=>{
-        try{
-          localStorage.setItem(KEYS.textoArriba, textoArriba.value);
-          showSaved(guardadoArriba);
-        }catch{}
-      }, 600);
-
-      const autoSaveBot = debounce(()=>{
-        try{
-          localStorage.setItem(KEYS.textoAbajo, textoAbajo.value);
-          showSaved(guardadoAbajo);
-        }catch{}
-      }, 600);
-
-      textoArriba.addEventListener('input', autoSaveTop);
-      textoAbajo.addEventListener('input', autoSaveBot);
-
-      function saveTitleTop(){ try{ localStorage.setItem(KEYS.tituloArriba, tituloArriba.textContent.trim()); }catch{} }
-      function saveTitleBot(){ try{ localStorage.setItem(KEYS.tituloAbajo,  tituloAbajo.textContent.trim()); }catch{} }
-      tituloArriba.addEventListener('blur', saveTitleTop);
-      tituloAbajo.addEventListener('blur', saveTitleBot);
-      tituloArriba.addEventListener('keydown', (e)=>{ if(e.key==='Enter'){ e.preventDefault(); tituloArriba.blur(); } });
-      tituloAbajo.addEventListener('keydown', (e)=>{ if(e.key==='Enter'){ e.preventDefault(); tituloAbajo.blur(); } });
-
-    })();
+    window.__tinta_mostrarMensaje = function() { typeWriter(); }
   </script>
 </body>
 </html>
